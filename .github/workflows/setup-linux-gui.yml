@@ -1,0 +1,51 @@
+name: Setup Linux GUI with Java
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  setup-gui:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Actualizar paquetes
+        run: |
+          sudo apt update && sudo apt upgrade -y
+
+      - name: Instalar entorno gráfico Xfce y VNC
+        run: |
+          sudo apt install -y xfce4 xfce4-goodies tightvncserver
+          mkdir -p ~/.vnc
+          echo "xfce4-session &" > ~/.vnc/xstartup
+          chmod +x ~/.vnc/xstartup
+          vncserver :1 -geometry 1280x720 -depth 24
+
+      - name: Instalar Java (OpenJDK 17)
+        run: |
+          sudo apt install -y openjdk-17-jdk
+          java -version
+
+      - name: Obtener la dirección IP pública y usuario
+        run: |
+          IP_PUBLICA=$(curl -s ifconfig.me)
+          USUARIO=$(whoami)
+          echo "Dirección IP Pública: $IP_PUBLICA"
+          echo "Usuario en la máquina: $USUARIO"
+
+      - name: Mostrar instrucciones de conexión
+        run: |
+          IP_PUBLICA=$(curl -s ifconfig.me)
+          USUARIO=$(whoami)
+          echo "==============================================="
+          echo "🔗 Cómo conectarte a esta máquina desde tu Mac"
+          echo "==============================================="
+          echo "1️⃣ Abre una terminal en tu Mac"
+          echo "2️⃣ Establece un túnel SSH con este comando:"
+          echo "   ssh -L 5901:localhost:5901 $USUARIO@$IP_PUBLICA"
+          echo "3️⃣ Luego, abre el cliente VNC con este comando:"
+          echo "   open vnc://localhost:5901"
+          echo "==============================================="
+          echo "🔥 Ahora puedes acceder a la interfaz gráfica remotamente."
