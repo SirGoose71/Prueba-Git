@@ -22,7 +22,7 @@ jobs:
 
       - name: Configurar contraseña para VNC
         run: |
-          echo -e "mi_password_secreto\nmi_password_secreto\nn" | vncpasswd
+          echo -e "12345" | vncpasswd
           chmod 600 ~/.vnc/passwd
 
       - name: Configurar y arrancar VNC
