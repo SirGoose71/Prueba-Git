@@ -19,6 +19,14 @@ jobs:
         run: |
           sudo apt install -y xfce4 xfce4-goodies tightvncserver
           mkdir -p ~/.vnc
+
+      - name: Configurar contraseña para VNC
+        run: |
+          echo -e "mi_password_secreto\nmi_password_secreto\nn" | vncpasswd
+          chmod 600 ~/.vnc/passwd
+
+      - name: Configurar y arrancar VNC
+        run: |
           echo "xfce4-session &" > ~/.vnc/xstartup
           chmod +x ~/.vnc/xstartup
           vncserver :1 -geometry 1280x720 -depth 24
@@ -44,6 +52,12 @@ jobs:
           echo "==============================================="
           echo "1️⃣ Abre una terminal en tu Mac"
           echo "2️⃣ Establece un túnel SSH con este comando:"
+          echo "   ssh -L 5901:localhost:5901 $USUARIO@$IP_PUBLICA"
+          echo "3️⃣ Luego, abre el cliente VNC con este comando:"
+          echo "   open vnc://localhost:5901"
+          echo "==============================================="
+          echo "🔥 Ahora puedes acceder a la interfaz gráfica remotamente."
+
           echo "   ssh -L 5901:localhost:5901 $USUARIO@$IP_PUBLICA"
           echo "3️⃣ Luego, abre el cliente VNC con este comando:"
           echo "   open vnc://localhost:5901"
