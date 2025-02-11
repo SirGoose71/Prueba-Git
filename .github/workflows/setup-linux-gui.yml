@@ -22,7 +22,7 @@ jobs:
 
       - name: Configurar contraseña para VNC
         run: |
-          echo -e "12345" | vncpasswd
+          echo -e "123456\n123456\nn" | vncpasswd
           chmod 600 ~/.vnc/passwd
 
       - name: Configurar y arrancar VNC
@@ -51,15 +51,5 @@ jobs:
           echo "🔗 Cómo conectarte a esta máquina desde tu Mac"
           echo "==============================================="
           echo "1️⃣ Abre una terminal en tu Mac"
-          echo "2️⃣ Establece un túnel SSH con este comando:"
-          echo "   ssh -L 5901:localhost:5901 $USUARIO@$IP_PUBLICA"
-          echo "3️⃣ Luego, abre el cliente VNC con este comando:"
-          echo "   open vnc://localhost:5901"
-          echo "==============================================="
-          echo "🔥 Ahora puedes acceder a la interfaz gráfica remotamente."
+          echo "2️⃣ Establece un
 
-          echo "   ssh -L 5901:localhost:5901 $USUARIO@$IP_PUBLICA"
-          echo "3️⃣ Luego, abre el cliente VNC con este comando:"
-          echo "   open vnc://localhost:5901"
-          echo "==============================================="
-          echo "🔥 Ahora puedes acceder a la interfaz gráfica remotamente."
